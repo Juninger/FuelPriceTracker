@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fuel Price Tracker</title>
+    <!-- Include CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<header>
+    <h1>Fuel Price Tracker</h1>
+    <!-- header content -->
+</header>
+
+<main>
+    <h2>Main content</h2>
+    <p th:text="${message}">Default message if message attribute is not passed from controller</p>
+</main>
+
+<footer>
+    <!-- Footer content -->
+</footer>
+
+<!-- Include JavaScript -->
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>
