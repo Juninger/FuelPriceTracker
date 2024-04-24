@@ -30,17 +30,17 @@ public class FuelPriceScraper {
             for (Element row : rows) {
 
                 Elements data = row.select("td"); // collection of table data cells in row
-                String name = data.get(1).select("div").first().ownText();
+                String name = data.get(1).selectFirst("div").ownText();
 
                 // filter to only scrape rows we are interested in and sort GASOLINE / DIESEL
                 if (name.equals("Bensin 95") || name.equals("Bensin 98 E5")) {
                     ingo.addNewFuel(new Fuel(name,
-                            data.get(2).select("div").first().ownText() + " kr/l", // price + units
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
                             data.get(3).select("time").text(), // last updated
                             FuelType.GASOLINE));
                 } else if (name.equals("Diesel")) {
                     ingo.addNewFuel(new Fuel(name,
-                            data.get(2).select("div").first().ownText() + " kr/l", // price + units
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
                             data.get(3).select("time").text(), // last updated
                             FuelType.DIESEL));
                 }
@@ -76,8 +76,8 @@ public class FuelPriceScraper {
                             data.get(1).text() + "/l", // price + units
                             data.get(4).text(), // last updated
                             FuelType.GASOLINE));
-                    okq8[1].addNewFuel(new Fuel(name, // manned station
-                            data.get(1).text() + "/l", // price + units
+                    okq8[1].addNewFuel(new Fuel(name, // unmanned station
+                            data.get(2).text() + "/l", // price + units
                             data.get(4).text(), // last updated
                             FuelType.GASOLINE));
 
@@ -86,8 +86,8 @@ public class FuelPriceScraper {
                             data.get(1).text() + "/l", // price + units
                             data.get(4).text(), // last updated
                             FuelType.DIESEL));
-                    okq8[1].addNewFuel(new Fuel(name, // manned station
-                            data.get(1).text() + "/l", // price + units
+                    okq8[1].addNewFuel(new Fuel(name, // unmanned station
+                            data.get(2).text() + "/l", // price + units
                             data.get(4).text(), // last updated
                             FuelType.DIESEL));
                 }
@@ -96,5 +96,105 @@ public class FuelPriceScraper {
             e.printStackTrace();
         }
         return okq8;
+    }
+
+    public GasStation[] scrapeCircleK() {
+        /*  Manned and unmanned prices are in different tables but scraped in one pass
+         *  GasStation[0] --> manned station prices
+         *  GasStation[1] --> unmanned station prices */
+        GasStation[] circleK = new GasStation[]{new GasStation("Circle K, manned"), new GasStation("Circle K, unmanned")};
+        String URL = "https://www.circlek.se/drivmedel/drivmedelspriser";
+
+        try {
+            // fetch HTML document
+            Document doc = Jsoup.connect(URL).get();
+
+            // selects table for MANNED STATION prices and extract rows
+            Elements mannedPriceRows = doc.selectFirst("tbody").select("tr");
+
+            // selects table for UNMANNED STATION prices and extract rows
+            Elements unmannedPriceRows = doc.select("tbody").last().select("tr");
+
+            // iterates all rows in table with MANNED STATION prices
+            for (Element row : mannedPriceRows) {
+
+                Elements data = row.select("td"); // collection of table data cells in row
+                String name = data.get(1).selectFirst("div").ownText();
+
+                // filter to only scrape rows we are interested in and sort GASOLINE / DIESEL
+                if (name.equals("miles 95") || name.equals("miles 98") || name.equals("miles+ 98")) {
+                    circleK[0].addNewFuel(new Fuel(name, // manned station
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
+                            data.get(3).select("time").text(), // last updated
+                            FuelType.GASOLINE));
+
+                } else if (name.equals("miles diesel") || name.equals("miles+ diesel") || name.equals("HVO100")) {
+                    circleK[0].addNewFuel(new Fuel(name, // manned station
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
+                            data.get(3).select("time").text(), // last updated
+                            FuelType.DIESEL));
+                }
+            }
+
+            // iterates all rows in table with UNMANNED STATION prices
+            for (Element row : unmannedPriceRows) {
+
+                Elements data = row.select("td"); // collection of table data cells in row
+                String name = data.get(1).selectFirst("div").ownText();
+
+                // filter to only scrape rows we are interested in and sort GASOLINE / DIESEL
+                if (name.equals("Bensin 95") || name.equals("Bensin 98")) {
+                    circleK[1].addNewFuel(new Fuel(name, // unmanned station
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
+                            data.get(3).select("time").text(), // last updated
+                            FuelType.GASOLINE));
+
+                } else if (name.equals("Diesel")) {
+                    circleK[1].addNewFuel(new Fuel(name, // unmanned station
+                            data.get(2).selectFirst("div").ownText() + " kr/l", // price + units
+                            data.get(3).select("time").text(), // last updated
+                            FuelType.DIESEL));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return circleK;
+    }
+
+    public GasStation scrapePreem() {
+
+        GasStation preem = new GasStation("Preem");
+        String URL = "https://www.preem.se/privat/drivmedel/drivmedelspriser/";
+
+        try {
+            // fetch HTML document
+            Document doc = Jsoup.connect(URL).get();
+
+            // select table for prices and extract rows
+            Elements rows = doc.select("tbody.Table-body tr");
+
+            for (Element row : rows) {
+
+                Elements data = row.select("td"); // collection of table data cells in row
+                String name = data.first().text();
+
+                // filter to only scrape rows we are interested in and sort GASOLINE / DIESEL
+                if (name.equals("Preem Evolution Bensin 95")) {
+                    preem.addNewFuel(new Fuel(name,
+                            data.get(1).text(), // price + units
+                            data.get(2).text(), // last updated
+                            FuelType.GASOLINE));
+                } else if (name.equals("Preem Evolution Diesel") || name.equals("HVO100")) {
+                    preem.addNewFuel(new Fuel(name,
+                            data.get(1).text(), // price + units
+                            data.get(2).text(), // last updated
+                            FuelType.DIESEL));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return preem;
     }
 }
