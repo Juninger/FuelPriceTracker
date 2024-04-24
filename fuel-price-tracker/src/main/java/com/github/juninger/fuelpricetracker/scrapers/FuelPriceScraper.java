@@ -8,9 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
-
 
 @Component // instantiated by Spring
 public class FuelPriceScraper {
@@ -183,12 +181,12 @@ public class FuelPriceScraper {
                 if (name.equals("Preem Evolution Bensin 95")) {
                     preem.addNewFuel(new Fuel(name,
                             data.get(1).text(), // price + units
-                            data.get(2).text(), // last updated
+                            "20" + data.get(2).text(), // last updated (formatted like 23-04-25 in table)
                             FuelType.GASOLINE));
                 } else if (name.equals("Preem Evolution Diesel") || name.equals("HVO100")) {
                     preem.addNewFuel(new Fuel(name,
                             data.get(1).text(), // price + units
-                            data.get(2).text(), // last updated
+                            "20" + data.get(2).text(), // last updated (formatted like 23-04-25 in table)
                             FuelType.DIESEL));
                 }
             }

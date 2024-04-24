@@ -13,12 +13,60 @@
 </header>
 
 <main>
-    <h2>Main content</h2>
-    <p th:text="${message}">Default message if message attribute is not passed from controller</p>
+    <!-- Gasoline table -->
+    <table>
+        <caption>Gasoline fuels</caption>
+        <thead>
+        <tr>
+            <th>Gas station</th>
+            <th>Fuel name</th>
+            <th>Price</th>
+            <th>Last updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="station : ${gasStations}">
+            <th:block th:each="fuel : ${station.fuels}">
+                <tr th:if="${fuel.type == fuelTypes.get(0)}">
+                    <td th:text="${station.name}"></td>
+                    <td th:text="${fuel.name}"></td>
+                    <td th:text="${fuel.price}"></td>
+                    <td th:text="${fuel.lastUpdated}"></td>
+                </tr>
+            </th:block>
+        </th:block>
+        </tbody>
+    </table>
+
+    <!-- Diesel table -->
+    <table>
+        <caption>Diesel fuels</caption>
+        <thead>
+        <tr>
+            <th>Gas station</th>
+            <th>Fuel name</th>
+            <th>Price</th>
+            <th>Last updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="station : ${gasStations}">
+            <th:block th:each="fuel : ${station.fuels}">
+                <tr th:if="${fuel.type == fuelTypes.get(1)}">
+                    <td th:text="${station.name}"></td>
+                    <td th:text="${fuel.name}"></td>
+                    <td th:text="${fuel.price}"></td>
+                    <td th:text="${fuel.lastUpdated}"></td>
+                </tr>
+            </th:block>
+        </th:block>
+        </tbody>
+    </table>
+
 </main>
 
 <footer>
-    <!-- Footer content -->
+    <a href="https://github.com/Juninger/FuelPriceTracker">GitHub</a>
 </footer>
 
 <!-- Include JavaScript -->

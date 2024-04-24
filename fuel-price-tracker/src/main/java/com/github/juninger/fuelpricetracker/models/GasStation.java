@@ -1,4 +1,5 @@
 package com.github.juninger.fuelpricetracker.models;
+
 import java.util.ArrayList;
 
 public class GasStation {
