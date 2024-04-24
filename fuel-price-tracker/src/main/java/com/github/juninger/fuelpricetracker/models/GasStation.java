@@ -10,11 +10,15 @@ public class GasStation {
     }
 
     public void addNewFuel(Fuel fuel) {
-        if (fuel!= null) fuels.add(fuel);
+        if (fuel != null) fuels.add(fuel);
     }
 
     public ArrayList<Fuel> getFuels() {
         return fuels;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
