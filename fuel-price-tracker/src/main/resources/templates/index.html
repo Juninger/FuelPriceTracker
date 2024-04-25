@@ -1,75 +1,81 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fuel Price Tracker</title>
-    <!-- Include CSS -->
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<header>
-    <h1>Fuel Price Tracker</h1>
-    <!-- header content -->
-</header>
+<div class="container">
+    <header>
+        <h1>Fuel Price Tracker</h1>
+        <!-- header content -->
+    </header>
 
-<main>
-    <!-- Gasoline table -->
-    <table>
-        <caption>Gasoline fuels</caption>
-        <thead>
-        <tr>
-            <th>Gas station</th>
-            <th>Fuel name</th>
-            <th>Price</th>
-            <th>Last updated</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="station : ${gasStations}">
-            <th:block th:each="fuel : ${station.fuels}">
-                <tr th:if="${fuel.type == fuelTypes.get(0)}">
-                    <td th:text="${station.name}"></td>
-                    <td th:text="${fuel.name}"></td>
-                    <td th:text="${fuel.price}"></td>
-                    <td th:text="${fuel.lastUpdated}"></td>
-                </tr>
+    <main>
+        <!-- Gasoline table -->
+        <table class="table table-sm table-bordered caption-top rounded-5">
+            <caption>Gasoline fuels</caption>
+            <thead>
+            <tr>
+                <th style="width: 30%;">Fuel name</th>
+                <th style="width: 20%;">Price</th>
+                <th style="width: 30%;">Gas station</th>
+                <th style="width: 20%;">Last updated</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <th:block th:each="station : ${gasStations}">
+                <th:block th:each="fuel : ${station.fuels}">
+                    <tr th:if="${fuel.type == fuelTypes.get(0)}">
+                        <td th:text="${fuel.name}"></td>
+                        <td th:text="${fuel.price}"></td>
+                        <td th:text="${station.name}"></td>
+                        <td th:text="${fuel.lastUpdated}"></td>
+                    </tr>
+                </th:block>
             </th:block>
-        </th:block>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <!-- Diesel table -->
-    <table>
-        <caption>Diesel fuels</caption>
-        <thead>
-        <tr>
-            <th>Gas station</th>
-            <th>Fuel name</th>
-            <th>Price</th>
-            <th>Last updated</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="station : ${gasStations}">
-            <th:block th:each="fuel : ${station.fuels}">
-                <tr th:if="${fuel.type == fuelTypes.get(1)}">
-                    <td th:text="${station.name}"></td>
-                    <td th:text="${fuel.name}"></td>
-                    <td th:text="${fuel.price}"></td>
-                    <td th:text="${fuel.lastUpdated}"></td>
-                </tr>
+        <!-- Diesel table -->
+        <table class="table table-sm table-bordered caption-top">
+            <caption>Diesel fuels</caption>
+            <thead>
+            <tr>
+                <th style="width: 30%;">Fuel name</th>
+                <th style="width: 20%;">Price</th>
+                <th style="width: 30%;">Gas station</th>
+                <th style="width: 20%;">Last updated</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="station : ${gasStations}">
+                <th:block th:each="fuel : ${station.fuels}">
+                    <tr th:if="${fuel.type == fuelTypes.get(1)}">
+                        <td th:text="${fuel.name}"></td>
+                        <td th:text="${fuel.price}"></td>
+                        <td th:text="${station.name}"></td>
+                        <td th:text="${fuel.lastUpdated}"></td>
+                    </tr>
+                </th:block>
             </th:block>
-        </th:block>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-</main>
+    </main>
 
-<footer>
-    <a href="https://github.com/Juninger/FuelPriceTracker">GitHub</a>
-</footer>
+    <footer>
+        <a href="https://github.com/Juninger/FuelPriceTracker">GitHub</a>
+    </footer>
 
-<!-- Include JavaScript -->
-<script th:src="@{/js/scripts.js}"></script>
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</div>
 </body>
 </html>
