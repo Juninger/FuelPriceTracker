@@ -18,7 +18,7 @@
         <!-- Gasoline table -->
         <h5 class="text-body-secondary">Gasoline fuels</h5>
         <div class="input-group mb-3" style="max-width: 25%;">
-            <input type="text" id="gasoline-search" class="form-control" placeholder="Search gasoline fuels...">
+            <input type="text" id="gasoline-search" class="form-control" placeholder="filter gasoline fuels...">
         </div>
         <table id="gasoline-table" class="table table-sm">
             <thead>
@@ -32,7 +32,9 @@
             <tbody class="table-group-divider">
             <th:block th:each="station : ${gasStations}">
                 <th:block th:each="fuel : ${station.fuels}">
-                    <tr th:if="${fuel.type == fuelTypes.get(0)}"> <!-- filter to only add gasoline fuels -->
+                    <!-- filter to only add gasoline fuels and check if the current one is the cheapest one available -->
+                    <tr th:if="${fuel.type == fuelTypes.get(0)}"
+                        th:class="${fuel.price == cheapestGasoline} ? 'table-success' : ''">
                         <td th:text="${fuel.name}"></td>
                         <td th:text="${fuel.price}"></td>
                         <td th:text="${station.name}"></td>
@@ -46,7 +48,7 @@
         <!-- Diesel table -->
         <h5 class="text-body-secondary">Diesel fuels</h5>
         <div class="input-group mb-3" style="max-width: 25%;">
-            <input type="text" id="diesel-search" class="form-control" placeholder="Search diesel fuels...">
+            <input type="text" id="diesel-search" class="form-control" placeholder="filter diesel fuels...">
         </div>
         <table id="diesel-table" class="table table-sm">
             <thead>
@@ -60,7 +62,9 @@
             <tbody class="table-group-divider">
             <th:block th:each="station : ${gasStations}">
                 <th:block th:each="fuel : ${station.fuels}">
-                    <tr th:if="${fuel.type == fuelTypes.get(1)}"> <!-- filter to only add diesel fuels -->
+                    <!-- filter to only add diesel fuels and check if the current one is the cheapest one available -->
+                    <tr th:if="${fuel.type == fuelTypes.get(1)}"
+                        th:class="${fuel.price == cheapestDiesel} ? 'table-success' : ''">
                         <td th:text="${fuel.name}"></td>
                         <td th:text="${fuel.price}"></td>
                         <td th:text="${station.name}"></td>
