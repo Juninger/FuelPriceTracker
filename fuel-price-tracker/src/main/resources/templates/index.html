@@ -12,7 +12,14 @@
 <div class="container">
     <main>
         <header>
-            <h1 class="display-4 text-center">Daily fuel prices</h1>
+            <figure>
+                <blockquote class="blockquote">
+                    <h1 class="display-3 text-center">Daily fuel prices</h1>
+                </blockquote>
+                <figcaption class="blockquote-footer text-center">prices fetched:
+                    <cite th:text="${dateTime}"></cite>
+                </figcaption>
+            </figure>
             <hr>
         </header>
         <!-- Gasoline table -->
