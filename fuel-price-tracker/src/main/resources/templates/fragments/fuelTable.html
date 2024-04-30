@@ -1,0 +1,24 @@
+<table th:fragment="fuelTable" th:id="${tableId}" class="table table-sm">
+    <thead>
+    <tr>
+        <th style="width: 30%;">Fuel name</th>
+        <th style="width: 20%;">Price</th>
+        <th style="width: 30%;">Gas station</th>
+        <th style="width: 20%;">Last updated</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <th:block th:each="station : ${gasStations}">
+        <th:block th:each="fuel : ${station.fuels}">
+            <!-- filter to only add gasoline fuels and check if the current one is the cheapest one available -->
+            <tr th:if="${fuel.type == fuelType}"
+                th:class="${fuel.price == cheapestFuel} ? 'table-success' : ''">
+                <td th:text="${fuel.name}"></td>
+                <td th:text="${fuel.price}"></td>
+                <td th:text="${station.name}"></td>
+                <td th:text="${fuel.lastUpdated}"></td>
+            </tr>
+        </th:block>
+    </th:block>
+    </tbody>
+</table>
