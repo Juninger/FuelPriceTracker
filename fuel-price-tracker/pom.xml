@@ -8,7 +8,7 @@
 		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.github.juninger</groupId>
+	<groupId>com.koyeb</groupId>
 	<artifactId>fuel-price-tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Fuel Price Tracker</name>
@@ -31,13 +31,6 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.17.2</version>
-		</dependency>
-
-		<!-- TODO: Remove later -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 	</dependencies>

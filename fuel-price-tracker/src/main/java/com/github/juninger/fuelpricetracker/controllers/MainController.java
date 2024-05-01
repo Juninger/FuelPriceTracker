@@ -23,9 +23,6 @@ public class MainController {
     @GetMapping("/")
     public String home(Model model) {
 
-        //TODO: Remove live reload / spring boot dev tools
-        //TODO: Consider using Thymeleaf fragments for table
-
         // calls service --> scraper to fetch all data
         List<GasStation> gasStations = fuelPriceService.getAllFuelPrices();
 
