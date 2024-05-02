@@ -53,7 +53,7 @@ public class FuelPriceScraper {
         /* Manned and unmanned prices are in the same table but in different columns
         *  GasStation[0] --> manned station prices
         *  GasStation[1] --> unmanned station prices */
-        GasStation[] okq8 = new GasStation[]{new GasStation("OKQ8, manned"), new GasStation("OKQ8, unmanned")};
+        GasStation[] okq8 = new GasStation[]{new GasStation("OKQ8, bemannad"), new GasStation("OKQ8, obemannad")};
         String URL = "https://www.okq8.se/pa-stationen/drivmedel/";
 
         try {
@@ -100,7 +100,7 @@ public class FuelPriceScraper {
         /*  Manned and unmanned prices are in different tables but scraped in one pass
          *  GasStation[0] --> manned station prices
          *  GasStation[1] --> unmanned station prices */
-        GasStation[] circleK = new GasStation[]{new GasStation("Circle K, manned"), new GasStation("Circle K, unmanned")};
+        GasStation[] circleK = new GasStation[]{new GasStation("Circle K, bemannad"), new GasStation("Circle K, automatstation")};
         String URL = "https://www.circlek.se/drivmedel/drivmedelspriser";
 
         try {
