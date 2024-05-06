@@ -1,5 +1,7 @@
 package com.github.juninger.fuelpricetracker.scrapers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.juninger.fuelpricetracker.models.Fuel;
 import com.github.juninger.fuelpricetracker.models.FuelType;
 import com.github.juninger.fuelpricetracker.models.GasStation;
@@ -9,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
+import java.net.URL;
 
 @Component // instantiated by Spring
 public class FuelPriceScraper {
@@ -194,5 +197,42 @@ public class FuelPriceScraper {
             e.printStackTrace();
         }
         return preem;
+    }
+
+    // prices available through API, no need for scraping
+    public GasStation scrapeTanka() {
+
+        GasStation tanka = new GasStation("Tanka");
+        String URL = "https://tanka.se/api/prices/single";
+
+        // JSON utility from Jackson library
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+
+            // sends GET-request and stores response in JsonNode
+            JsonNode data = mapper.readValue(new URL(URL), JsonNode.class);
+
+            String lastUpdated = data.get("date").asText();
+
+            tanka.addNewFuel(new Fuel("Bensin 95",
+                    data.get("95").asText() + " kr/l",
+                    lastUpdated,
+                    FuelType.GASOLINE));
+
+            tanka.addNewFuel(new Fuel("Diesel",
+                    data.get("diesel").asText() + " kr/l",
+                    lastUpdated,
+                    FuelType.DIESEL));
+
+            tanka.addNewFuel(new Fuel("HVO100",
+                    data.get("hvo100").asText() + " kr/l",
+                    lastUpdated,
+                    FuelType.DIESEL));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tanka;
     }
 }
