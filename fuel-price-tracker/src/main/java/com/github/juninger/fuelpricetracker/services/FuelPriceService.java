@@ -31,6 +31,8 @@ public class FuelPriceService {
 
         GasStation ingo = scraper.scrapeIngo();
 
+        GasStation tanka = scraper.scrapeTanka();
+
         gasStations = new ArrayList<>() {
             {
                 add(preem);
@@ -39,9 +41,9 @@ public class FuelPriceService {
                 add(okq8[0]);
                 add(okq8[1]);
                 add(ingo);
+                add(tanka);
             }
         };
-
         return gasStations;
     }
 
